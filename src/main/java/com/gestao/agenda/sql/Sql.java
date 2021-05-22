@@ -42,14 +42,12 @@ public class Sql {
                 "("+secretarie.getId()+", "+secretarie.getNome()+", "+secretarie.getCpf()+", "+secretarie.getEmail()+", "+secretarie.getIdade()+", "+secretarie.getTelefone()+", "+secretarie.getSenha()+")";
     }
 
-    //proposta de alteração!!!
-    //na tabela de consulta fazer a primary key ser uma constraint [ primary key(dia, horario,cancelada,id_medico) ]
-    //pq eh mais facil de ver se existe ou nao pra poder agendar!!
-    //(o cancelar ta ai pq necessariamente quadno vc for cadastrar tem q estar como falso e se tiver outra tbm ja elimina)
-
-    public int horarioDisponivel(String primaryKey){
-        String sql = "select (id_consulta='"+primaryKey+"') from Consulta";
-        return 0;
+    public boolean horarioDisponivel(String dia, String horario, int idMedico){
+        String sql = "select (dia='"+dia+"'\n" +
+                     "and horario='"+horario+"'\n" +
+                     "and idMedico="+idMedico+"\n" +
+                     "and cancelada=0) from Consulta";
+        return true;
     }
 
     public int crmDisponivel(String crm){
@@ -90,5 +88,9 @@ public class Sql {
     public Secretarie getMedico(String login){
         String sql = "select * from Medico where (email='"+login+"' or cpf='"+login+"')";
         return null;
+    }
+
+    public void updateCancelada(String idConsulta) {
+        String sql = "update Consulta set cancelada=true where id='"+idConsulta+"'";
     }
 }

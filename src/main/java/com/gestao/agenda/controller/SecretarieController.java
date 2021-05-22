@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class SecretarieController {
     private final static String SECRETARIE_NAO_ENCONTRADO = "secretarie não cadastrado :(";
     private final static String LOGIN_EFETUADO = "login afetuado!!";
+    private final static String CONSULTA_CANCELADA = "consulta cancelada com sucesso";
     private final SecretarieService secretarieService;
 
     @Autowired
@@ -46,10 +47,20 @@ public class SecretarieController {
     @GetMapping("/pacientes")
     public ResponseEntity getAllPacientes(@RequestParam String idSecretaria){
         try {
-            Secretarie secretarie = this.secretarieService.getSecretarie(idSecretaria)
-                    .orElseThrow(() -> new Exception(SECRETARIE_NAO_ENCONTRADO));
+            this.secretarieService.getSecretarie(idSecretaria).orElseThrow(() -> new Exception(SECRETARIE_NAO_ENCONTRADO));
 
             return ResponseEntity.ok(this.secretarieService.getAllPacientes());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/cancelar")
+    public ResponseEntity updateCancelada(@RequestParam String idSecretaria, @RequestParam String idConsulta){
+        try {
+            this.secretarieService.getSecretarie(idSecretaria).orElseThrow(() -> new Exception(SECRETARIE_NAO_ENCONTRADO));
+            this.secretarieService.updateCancelada(idConsulta);
+            return ResponseEntity.ok(CONSULTA_CANCELADA);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

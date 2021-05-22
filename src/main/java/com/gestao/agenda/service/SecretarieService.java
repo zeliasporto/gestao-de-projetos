@@ -38,4 +38,8 @@ public class SecretarieService {
     public List<Medico> getAllMedicos(String idSecretarie){
         return sql.getAllMedicos(idSecretarie);
     }
+
+    public void updateCancelada(String idConsulta){
+        sql.updateCancelada(idConsulta);
+    }
 }

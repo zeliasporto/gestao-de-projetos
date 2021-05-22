@@ -8,10 +8,7 @@ import com.gestao.agenda.service.CadastroService;
 import com.gestao.agenda.service.SecretarieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cadastro")
@@ -31,7 +28,7 @@ public class CadastroController {
     }
 
     @GetMapping("/consulta")
-    public ResponseEntity addConsulta(@RequestBody Consulta consulta, @RequestBody String login){
+    public ResponseEntity addConsulta(@RequestBody Consulta consulta, @RequestParam String login){
         try {
             this.secretarieService.getSecretarie(login).orElseThrow(() -> new Exception(LOGIN_INVALIDO));
             this.cadastroService.addConsulta(consulta);
@@ -42,7 +39,7 @@ public class CadastroController {
     }
 
     @GetMapping("/medico")
-    public ResponseEntity addMedico(@RequestBody Medico medico, @RequestBody String login){
+    public ResponseEntity addMedico(@RequestBody Medico medico, @RequestParam String login){
         try {
             this.secretarieService.getSecretarie(login).orElseThrow(() -> new Exception(LOGIN_INVALIDO));
             this.cadastroService.addMedico(medico);
@@ -53,7 +50,7 @@ public class CadastroController {
     }
 
     @GetMapping("/paciente")
-    public ResponseEntity addPaciente(@RequestBody Paciente paciente, @RequestBody String login){
+    public ResponseEntity addPaciente(@RequestBody Paciente paciente, @RequestParam String login){
         try {
             this.secretarieService.getSecretarie(login).orElseThrow(() -> new Exception(LOGIN_INVALIDO));
             this.cadastroService.addPaciente(paciente);
@@ -64,7 +61,7 @@ public class CadastroController {
     }
 
     @GetMapping("/secretarie")
-    public ResponseEntity addSecretarie(@RequestBody Secretarie secretarie, @RequestBody String login){
+    public ResponseEntity addSecretarie(@RequestBody Secretarie secretarie, @RequestParam String login){
         try {
             this.secretarieService.getSecretarie(login).orElseThrow(() -> new Exception(LOGIN_INVALIDO));
             this.cadastroService.addSecretarie(secretarie);

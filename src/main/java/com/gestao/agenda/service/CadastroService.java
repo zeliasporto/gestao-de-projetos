@@ -38,12 +38,12 @@ public class CadastroService {
     }
 
     public void addConsulta(Consulta consulta) throws Exception {
-        horarioDisponivel(consulta.getId());
+        horarioDisponivel(consulta.getDia(), consulta.getHorario(), consulta.getIdMedico());
         sql.cadastrarConsulta(consulta);
     }
 
-    public void horarioDisponivel(String primaryKey) throws Exception {
-        if(sql.horarioDisponivel(primaryKey)>0){
+    public void horarioDisponivel(String dia, String horario, int idMedico) throws Exception {
+        if(sql.horarioDisponivel(dia, horario, idMedico)){
             throw new Exception(CRM_INDISPONIVEL);
         }
     }
